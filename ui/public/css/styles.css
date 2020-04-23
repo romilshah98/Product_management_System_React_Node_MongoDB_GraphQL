@@ -1,16 +1,4 @@
-table {
-    border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
-
-  th,td{
-      padding: 5px;
-  }
-
-  select,input{
+select,input,NumInput, TextInput{
       width:100px;
       height:25px ;
       margin: 20px;
@@ -20,3 +8,5 @@ table {
     display: inline-block;
     width: 100px;
   }
+
+  

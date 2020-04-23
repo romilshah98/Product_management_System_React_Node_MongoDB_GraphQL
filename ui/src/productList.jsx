@@ -1,18 +1,26 @@
 /* eslint linebreak-style: ["error","windows"] */
 /* eslint "react/jsx-no-undef": "off" */
-// import ProductFilter from './productFilter.jsx';
 import React from 'react';
+import { Label, Panel } from 'react-bootstrap';
 import ProductTable from './productTable.jsx';
 import ProductAdd from './productAdd.jsx';
+import Toast from './Toast.jsx';
 
 export default class ProductList extends React.Component {
   constructor() {
     super();
-    this.state = { products: [] };
+    this.state = {
+      products: [],
+      toastVisible: false,
+      toastMessage: ' ',
+      toastType: 'success',
+    };
     this.createProduct = this.createProduct.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
+    this.showSuccess = this.showSuccess.bind(this);
+    this.showError = this.showError.bind(this);
+    this.dismissToast = this.dismissToast.bind(this);
   }
-
 
   componentDidMount() {
     document.forms.ProductAdd.price.value = '$';
@@ -59,33 +67,69 @@ export default class ProductList extends React.Component {
     const query = `mutation productDelete($id: Int!) {
       productDelete(id: $id)
     }`;
-    // // const { products } = this.state;
-    // // const { location: { pathname, search }, history } = this.props;
-    // // const { id } = issues[index];
+
     const variables = { id };
     await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });
-    alert('Product deleted product successfully!');
+    this.showSuccess('Product Deleted Successfully');
     this.loadData();
+  }
+
+  showSuccess(message) {
+    this.setState({
+      toastVisible: true,
+      toastMessage: message,
+      toastType: 'success',
+    });
+  }
+
+  showError(message) {
+    this.setState({
+      toastVisible: true,
+      toastMessage: message,
+      toastType: 'danger',
+    });
+  }
+
+  dismissToast() {
+    this.setState({
+      toastVisible: false,
+    });
   }
 
   render() {
     const { products } = this.state;
+    const { toastVisible, toastMessage, toastType } = this.state;
     return (
       <div>
-        <h1>My Company Inventory</h1>
-        <div>Showing all available products</div>
-        <hr />
+        <h1><Label>My Product Inventory</Label></h1>
         <br />
-        <ProductTable products={products} deleteProduct={this.deleteProduct} />
-        <br />
-        <div>Add a new product to inventory</div>
-        <hr />
-        <br />
-        <ProductAdd createProduct={this.createProduct} />
+        <Panel>
+          <Panel.Heading>
+            <Panel.Title>All available products</Panel.Title>
+          </Panel.Heading>
+          <Panel.Body>
+            <ProductTable products={products} deleteProduct={this.deleteProduct} />
+          </Panel.Body>
+        </Panel>
+        <Panel>
+          <Panel.Heading>
+            <Panel.Title toggle>Add a new product</Panel.Title>
+          </Panel.Heading>
+          <Panel.Body collapsible>
+            <ProductAdd createProduct={this.createProduct} />
+          </Panel.Body>
+          <Toast
+            showing={toastVisible}
+            onDismiss={this.dismissToast}
+            bsStyle={toastType}
+          >
+            {toastMessage}
+          </Toast>
+        </Panel>
       </div>
     );
   }
