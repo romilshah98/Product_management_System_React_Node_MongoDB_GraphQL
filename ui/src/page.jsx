@@ -8,6 +8,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Contents from './contents.jsx';
+import SignInNavItem from './signIn.jsx';
 
 function NavBar() {
   return (
@@ -24,6 +25,9 @@ function NavBar() {
           <LinkContainer to="/products">
             <NavItem>Product List</NavItem>
           </LinkContainer>
+        </Nav>
+        <Nav pullRight>
+          <SignInNavItem />
         </Nav>
       </Navbar.Collapse>
     </Navbar>
