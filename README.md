@@ -6,4 +6,4 @@
 
 2. Using terminal go to the ui and do npm install as well as go to the api and do npm install.
 
-3. Now everything is ready and go to localhost:8000 using your browser.
+3. Now everything is ready, do npm start in both ui and api and then go to localhost:8000 in your browser.
