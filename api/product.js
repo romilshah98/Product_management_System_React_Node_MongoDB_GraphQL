@@ -43,10 +43,25 @@ async function remove(_, { id }) {
   return false;
 }
 
+async function restore(_, { id }) {
+  const db = getDb();
+  const product = await db.collection('deleted_products').findOne({ id });
+  if (!product) return false;
+  // product.deleted = new Date();
+  let result = await db.collection('products').insertOne(product);
+  console.log(result);
+  if (result.insertedId) {
+    result = await db.collection('deleted_products').removeOne({ id });
+    return result.deletedCount === 1;
+  }
+  return false;
+}
+
 module.exports = {
   productList,
   productAdd,
   getProduct,
   productUpdate,
   remove,
+  restore,
 };

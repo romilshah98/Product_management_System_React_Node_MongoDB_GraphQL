@@ -14,6 +14,7 @@ const resolvers = {
     productAdd: product.productAdd,
     productUpdate: product.productUpdate,
     productDelete: product.remove,
+    productRestore: product.restore,
   },
 };
 

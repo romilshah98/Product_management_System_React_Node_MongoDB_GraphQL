@@ -1,7 +1,7 @@
 /* eslint linebreak-style: ["error","windows"] */
 /* eslint "react/jsx-no-undef": "off" */
 import React from 'react';
-import { Label, Panel } from 'react-bootstrap';
+import { Label, Panel, Button } from 'react-bootstrap';
 import ProductTable from './productTable.jsx';
 import ProductAdd from './productAdd.jsx';
 import Toast from './Toast.jsx';
@@ -63,6 +63,20 @@ export default class ProductList extends React.Component {
     this.loadData();
   }
 
+  async restoreProduct(id) {
+    const query = `mutation productRestore($id: Int!) {      
+      productRestore(id: $id)   
+     }`;
+    const variables = { id };
+    await fetch(window.ENV.UI_API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables }),
+    });
+    this.showSuccess('Product restored successfully.');
+    this.loadData();
+  }
+
   async deleteProduct(id) {
     const query = `mutation productDelete($id: Int!) {
       productDelete(id: $id)
@@ -74,7 +88,16 @@ export default class ProductList extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });
-    this.showSuccess('Product Deleted Successfully');
+    // this.showSuccess('Product Deleted Successfully');
+    const undoMessage = (
+      <span>
+        Deleted Product successfully.
+        <Button bsStyle="link" onClick={() => this.restoreProduct(id)}>
+          UNDO
+        </Button>
+      </span>
+    );
+    this.showSuccess(undoMessage);
     this.loadData();
   }
 

@@ -7,6 +7,7 @@ type Mutation{
     productAdd(product:productInput!):Product!
     productUpdate(id: Int!, changes: productUpdateInputs!): Product! 
     productDelete(id: Int!): Boolean!
+    productRestore(id: Int!): Boolean!
 }
 
 type Product {
