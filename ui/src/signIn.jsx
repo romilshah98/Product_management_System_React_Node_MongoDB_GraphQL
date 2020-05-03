@@ -5,10 +5,11 @@ import {
   NavItem, Modal,
   Button, NavDropdown, MenuItem,
 } from 'react-bootstrap';
+
 export default class SigninNavItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showing: false, user: { signedIn: false, givenName: '' }, };
+    this.state = { showing: false, user: { signedIn: false, givenName: '' } };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.signOut = this.signOut.bind(this);
