@@ -8,7 +8,6 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Contents from './contents.jsx';
-import SignInNavItem from './signIn.jsx';
 
 function NavBar() {
   return (
@@ -26,9 +25,6 @@ function NavBar() {
             <NavItem>Product List</NavItem>
           </LinkContainer>
         </Nav>
-        <Nav pullRight>
-          <SignInNavItem />
-        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
@@ -41,7 +37,7 @@ function Footer() {
         <br />
         ROMIL SHAH
         <br />
-        <a href="https://github.com/romilshah98/Assignment_6" target="blank">
+        <a href="https://github.com/romilshah98/Product_management_System_React_Node_MongoDB_GraphQL" target="blank">
           GitHub repository
         </a>
       </p>

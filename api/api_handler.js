@@ -19,6 +19,8 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
+  playground: true,
+  introspection: true,
   typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
   resolvers,
 });
